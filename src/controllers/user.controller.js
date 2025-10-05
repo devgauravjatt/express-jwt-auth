@@ -16,7 +16,6 @@ export const findById = async (req, res) => {
     if (!user) return errorResponse(res, "Usuario no encontrado", 404);
     return successResponse(res, "Usuario encontrado", user);
   } catch (error) {
-    console.log(error)
     return errorResponse(res, error.message, 500);
   }
 };
@@ -38,7 +37,7 @@ export const findByEmail = async (req, res) => {
     if (!user) return errorResponse(res, "Usuario no encontrado", 404);
     return successResponse(res, "Usuario encontrado", user);
   } catch (error) {
-    console.log(error);
+   
     return errorResponse(res, error.message, 500);
   }
 };

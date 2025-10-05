@@ -18,7 +18,7 @@ export const authMiddleware = async (req, res, next) => {
     const user = await User.findByPk(decoded.id, {
       include: [{ model: Role, as: "role", attributes: ["id", "name"] }],
     });
- console.log(user)
+
     if (!user) {
       return res.status(401).json({ success: false, message: "Usuario no encontrado." });
     }

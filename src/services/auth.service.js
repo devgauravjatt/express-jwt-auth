@@ -91,3 +91,49 @@ export const logoutUser = async (userId) => {
 
   return { message: "Sesión cerrada correctamente." };
 };
+
+
+/**
+ * Actualizar datos de un usuario (nombre y/o email)
+ */
+export const updateUser = async (userId, { name, email }) => {
+  const user = await User.findByPk(userId);
+  if (!user) throw new Error("Usuario no encontrado.");
+
+  if (name) user.username = name;
+
+  if (email && email !== user.email) {
+    // Verificar que el email no esté en uso por otro usuario
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser && existingUser.id !== userId) {
+      throw new Error("El correo ya está registrado por otro usuario.");
+    }
+    user.email = email;
+  }
+
+  await user.save();
+
+  return await User.findByPk(userId, {
+    attributes: { exclude: ["password", "refreshToken"] },
+    include: [{ model: Role, as: "role", attributes: ["id", "name"] }],
+  });
+};
+
+
+/**
+ * Actualizar la contraseña de un usuario
+ */
+export const updatePassword = async (userId, { oldPassword, newPassword }) => {
+  const user = await User.findByPk(userId);
+  if (!user) throw new Error("Usuario no encontrado.");
+
+  const isMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!isMatch) throw new Error("La contraseña actual es incorrecta.");
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  user.password = hashedPassword;
+
+  await user.save();
+
+  return { message: "Contraseña actualizada correctamente." };
+};
