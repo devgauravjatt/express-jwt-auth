@@ -1,8 +1,9 @@
 import { 
-  registerUser, 
+ registerUser, 
   loginUser, 
-  updateUser, 
-  updatePassword 
+updateUser,
+  updatePassword,
+
 } from "../services/auth.service.js";
 import { successResponse, errorResponse } from "../utils/response.util.js";
 
@@ -33,18 +34,7 @@ export const verify = async (req, res) => {
     return errorResponse(res, "Token inválido", 403);
   }
 };
-/**
- * Actualizar datos del usuario (nombre/email)
- */
-export const updateProfile = async (req, res) => {
-  try {
-    const updatedUser = await updateUser(req.user.id, req.body);
-    return successResponse(res, "Usuario actualizado correctamente", updatedUser);
-  } catch (error) {
 
-    return errorResponse(res, error.message, 400);
-  }
-};
 
 /**
  * Cambiar contraseña del usuario
@@ -54,6 +44,19 @@ export const changePassword = async (req, res) => {
     const result = await updatePassword(req.user.id, req.body);
     return successResponse(res, result.message);
   } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+
+/**
+ * Actualizar datos del usuario (nombre/email)
+ */
+export const updateProfile = async (req, res) => {
+  try {
+    const updatedUser = await updateUser(req.user.id, req.body);
+    return successResponse(res, "Usuario actualizado correctamente", updatedUser);
+  } catch (error) {
+
     return errorResponse(res, error.message, 400);
   }
 };

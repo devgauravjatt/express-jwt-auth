@@ -143,12 +143,24 @@ paths:
                       properties:
                         id:
                           type: integer
-                        name:
+                        username:
                           type: string
                         email:
                           type: string
                         role:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        status:
                           type: string
+                          enum:
+                            - ACTIVE
+                            - INACTIVE
+                            - SUSPENDED
+                            - BLOCKED
 
   /users/{id}:
     get:
@@ -164,28 +176,8 @@ paths:
       responses:
         200:
           description: Usuario encontrado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
         404:
           description: Usuario no encontrado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
 
   /users/username/{username}:
     get:
@@ -230,27 +222,6 @@ paths:
       responses:
         200:
           description: Perfil obtenido correctamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      email:
-                        type: string
-                      role:
-                        type: string
-
     put:
       summary: Actualizar nombre y email del usuario autenticado
       security:
@@ -269,24 +240,6 @@ paths:
       responses:
         200:
           description: Perfil actualizado correctamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      email:
-                        type: string
 
   /auth/password:
     put:
@@ -300,20 +253,74 @@ paths:
             schema:
               type: object
               properties:
-                password:
+                oldPassword:
+                  type: string
+                newPassword:
                   type: string
       responses:
         200:
           description: Contraseña actualizada correctamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
+
+  # ===== USER STATUS MANAGEMENT =====
+  /users/{id}/activate:
+    put:
+      summary: Activar usuario (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usuario activado correctamente
+
+  /users/{id}/deactivate:
+    put:
+      summary: Desactivar usuario (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usuario desactivado correctamente
+
+  /users/{id}/suspend:
+    put:
+      summary: Suspender usuario (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usuario suspendido correctamente
+
+  /users/{id}/block:
+    put:
+      summary: Bloquear usuario (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usuario bloqueado correctamente
 
 components:
   securitySchemes:

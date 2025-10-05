@@ -1,4 +1,7 @@
-import { getAllUsers, getUserById, getUserByUsername, getUserByEmail } from "../services/user.service.js";
+import { getAllUsers, getUserById, getUserByUsername, getUserByEmail,  activateUser,
+  deactivateUser,
+  suspendUser,
+  blockUser } from "../services/user.service.js";
 import { successResponse, errorResponse } from "../utils/response.util.js";
 
 export const findAll = async (req, res) => {
@@ -41,3 +44,43 @@ export const findByEmail = async (req, res) => {
     return errorResponse(res, error.message, 500);
   }
 };
+
+/**
+ * Controladores de estado
+ */
+export const setUserActive = async (req, res) => {
+  try {
+    const user = await activateUser(req.params.id);
+    return successResponse(res, "Usuario activado correctamente", user);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+
+export const setUserInactive = async (req, res) => {
+  try {
+    const user = await deactivateUser(req.params.id);
+    return successResponse(res, "Usuario desactivado correctamente", user);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+
+export const setUserSuspended = async (req, res) => {
+  try {
+    const user = await suspendUser(req.params.id);
+    return successResponse(res, "Usuario suspendido correctamente", user);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+
+export const setUserBlocked = async (req, res) => {
+  try {
+    const user = await blockUser(req.params.id);
+    return successResponse(res, "Usuario bloqueado correctamente", user);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+

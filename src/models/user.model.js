@@ -28,6 +28,12 @@ export const User = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    status: {
+      type: DataTypes.ENUM("ACTIVE", "INACTIVE", "BLOCKED", "SUSPENDED"),
+      allowNull: false,
+      defaultValue: "ACTIVE", // por defecto cuando se crea un usuario
+    },
+
   },
   {
     tableName: "users",

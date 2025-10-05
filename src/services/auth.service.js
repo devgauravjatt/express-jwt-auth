@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { User, Role } from "../models/index.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.util.js";
 
+
 /**
  * Registrar un nuevo usuario
  */
@@ -15,7 +16,7 @@ export const registerUser = async ({ name, email, password, roleName = "USER" })
   if (!role) throw new Error("El rol especificado no existe.");
 
   const user = await User.create({
-    username:name,
+    username: name,
     email,
     password: hashedPassword,
     roleId: role.id,
@@ -93,6 +94,26 @@ export const logoutUser = async (userId) => {
 };
 
 
+
+
+/**
+ * Actualizar la contraseña de un usuario
+ */
+export const updatePassword = async (userId, { oldPassword, newPassword }) => {
+  const user = await User.findByPk(userId);
+  if (!user) throw new Error("Usuario no encontrado.");
+
+  const isMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!isMatch) throw new Error("La contraseña actual es incorrecta.");
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  user.password = hashedPassword;
+
+  await user.save();
+
+  return { message: "Contraseña actualizada correctamente." };
+};
+
 /**
  * Actualizar datos de un usuario (nombre y/o email)
  */
@@ -120,20 +141,3 @@ export const updateUser = async (userId, { name, email }) => {
 };
 
 
-/**
- * Actualizar la contraseña de un usuario
- */
-export const updatePassword = async (userId, { oldPassword, newPassword }) => {
-  const user = await User.findByPk(userId);
-  if (!user) throw new Error("Usuario no encontrado.");
-
-  const isMatch = await bcrypt.compare(oldPassword, user.password);
-  if (!isMatch) throw new Error("La contraseña actual es incorrecta.");
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  user.password = hashedPassword;
-
-  await user.save();
-
-  return { message: "Contraseña actualizada correctamente." };
-};
