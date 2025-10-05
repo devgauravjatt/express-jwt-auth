@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: Node Auth JWT MySQL API
+  version: 1.0.0
+  description: API con autenticación JWT y roles (USER / ADMIN) usando Node.js, Express y MySQL
+
+servers:
+  - url: http://localhost:4000/api
+    description: Servidor local
+
+paths:
+  /auth/register:
+    post:
+      summary: Registro de nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: Usuario registrado correctamente
+
+  /auth/login:
+    post:
+      summary: Iniciar sesión y obtener tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login exitoso con tokens
+
+  /users:
+    get:
+      summary: Lista de usuarios (solo ADMIN)
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Lista de usuarios obtenida correctamente
+
+  /users/{id}:
+    get:
+      summary: Obtener usuario por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Usuario encontrado
+        404:
+          description: Usuario no encontrado
+
+  /users/username/{username}:
+    get:
+      summary: Obtener usuario por username (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario encontrado
+        404:
+          description: Usuario no encontrado
+
+  /users/email/{email}:
+    get:
+      summary: Obtener usuario por email (solo ADMIN)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Usuario encontrado
+        404:
+          description: Usuario no encontrado
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
