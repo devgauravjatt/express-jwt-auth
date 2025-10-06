@@ -58,7 +58,7 @@ export const loginUser = async ({ email, password }) => {
   await user.save();
 
   // 🔹 Retorna solo el token de acceso
-  return { accessToken };
+  return {user, accessToken };
 };
 
 

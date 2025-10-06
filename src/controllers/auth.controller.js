@@ -22,7 +22,7 @@ export const login = async (req, res) => {
     const tokens = await loginUser(req.body);
     return successResponse(res, "Inicio de sesión exitoso", tokens);
   } catch (error) {
- 
+
     return errorResponse(res, error.message, 401);
   }
 };
