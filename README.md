@@ -1,59 +1,64 @@
-# 🛡️ auth-jwt-node - Easy JWT Authentication Made Simple
+# 🛡️ express-jwt-auth - Easy JWT Authentication Made Simple
 
-## 🔗 Download Now
-[![Download auth-jwt-node](https://img.shields.io/badge/Download%20auth--jwt--node-v1.0-blue)](https://github.com/mooorsoul23/auth-jwt-node/releases)
+## 🔗 Repository
+
+[![GitHub](https://img.shields.io/badge/GitHub-express--jwt--auth-blue)](https://github.com/devgauravjatt/express-jwt-auth)
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these steps to download and run the application on your computer. This guide is simple and clear. You won’t need any programming skills.
+Follow these steps to clone and run the application on your computer.
 
 ### 🔍 Overview
 
 This application provides authentication and authorization using Node.js, Express, JWT, Sequelize, and MySQL. It includes role management for users and admins, custom middleware, and API documentation via Swagger UI.
 
-## 💻 System Requirements
+## 📥 Installation
 
-To run this application, ensure your system meets the following requirements:
+### Clone the Repository
 
-- Operating System: Windows, macOS, or Linux
-- Node.js: version 12 or higher
-- MySQL: version 5.7 or higher
+```bash
+git clone https://github.com/devgauravjatt/express-jwt-auth.git
+cd express-jwt-auth
+```
 
-## 📥 Download & Install
+### Install Dependencies
 
-1. **Visit the download page**: Go to the [Releases page](https://github.com/mooorsoul23/auth-jwt-node/releases) to find the latest version.
+```bash
+npm install
+```
 
-2. **Choose the version**: Look for the latest release and click on it.
+### Set up Environment Variables
 
-3. **Download the package**: You’ll see different files available for download. Choose the one that fits your operating system.
+Create a `.env` file in the root directory and configure the following variables:
 
-4. **Extract the files**: If the downloaded file is zipped, right-click on it and select "Extract" to unpack the files.
+```env
+DB_HOST=localhost
+DB_USER=your_mysql_user
+DB_PASS=your_mysql_password
+DB_NAME=auth_jwt
+JWT_SECRET=your_secret_key
+PORT=3000
+```
 
-5. **Open a terminal or command prompt**:
-   - **Windows**: Press `Win + R`, type `cmd`, and press Enter.
-   - **macOS**: Press `Command + Space`, type `Terminal`, and press Enter.
-   - **Linux**: Find the terminal in your applications.
+### Set up the Database
 
-6. **Navigate to the extracted folder**: Use the `cd` command to change to the directory where you extracted the files. For example:
-   ```
-   cd path/to/extracted/folder
-   ```
+Make sure you have MySQL running. Create a database named `auth_jwt`, and the application will automatically set up the necessary tables on first run.
 
-7. **Install dependencies**: Run the following command in the terminal:
-   ```
-   npm install
-   ```
-   This will set up everything you need to run the application.
+### Start the Application
 
-8. **Set up the database**: Make sure you have MySQL running. Create a database named `auth_jwt`, and run the migration files included in the project to set up the necessary tables.
+```bash
+npm start
+```
 
-9. **Start the application**: Use the following command:
-   ```
-   npm start
-   ```
-   Your application will start running on your local server. You can access it via `http://localhost:3000`.
+For development with auto-reload:
+
+```bash
+npm run dev
+```
+
+Your application will start running on `http://localhost:3000`.
 
 ## 📜 Documentation
 
@@ -82,13 +87,14 @@ This project uses several technologies to deliver its functionality:
 
 ## 🌐 Community & Support
 
-If you have questions or feedback, feel free to open an issue on this repository. Your input helps improve the project. Make sure to browse through existing issues for common questions and solutions.
+If you have questions or feedback, feel free to open an issue on the [GitHub repository](https://github.com/devgauravjatt/express-jwt-auth). Your input helps improve the project. Make sure to browse through existing issues for common questions and solutions.
 
 ---
 
-## 🚀 Download Now
-[![Download auth-jwt-node](https://img.shields.io/badge/Download%20auth--jwt--node-v1.0-blue)](https://github.com/mooorsoul23/auth-jwt-node/releases)
+## 📝 License
+
+This project is open source and available for use and modification.
 
 ---
 
-By following these steps, you can easily download and run the authentification application without any hassle. Enjoy a secure and efficient way to manage user authentication and authorization!
+**Enjoy building secure authentication systems with JWT!**
