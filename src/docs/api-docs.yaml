@@ -2,24 +2,24 @@ openapi: 3.0.0
 info:
   title: Node Auth JWT MySQL API
   version: 1.0.0
-  description: API con autenticación JWT y roles (USER / ADMIN) usando Node.js, Express y MySQL
+  description: API with JWT authentication and roles (USER / ADMIN) using Node.js, Express and MySQL
 
 servers:
   - url: http://localhost:4000/api
-    description: Servidor local
+    description: Local server
 
 tags:
   - name: Auth
-    description: Operaciones de autenticación y gestión del perfil
+    description: Authentication operations and profile management
   - name: Users
-    description: Operaciones de gestión de usuarios (ADMIN)
+    description: User management operations (ADMIN)
 
 paths:
   /auth/register:
     post:
       tags:
         - Auth
-      summary: Registro de nuevo usuario
+      summary: Register new user
       requestBody:
         required: true
         content:
@@ -35,10 +35,10 @@ paths:
                   type: string
                 roleName:
                   type: string
-                  description: "Opcional, por defecto USER"
+                  description: 'Optional, default is USER'
       responses:
         201:
-          description: Usuario registrado correctamente
+          description: User registered successfully
           content:
             application/json:
               schema:
@@ -55,7 +55,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: Iniciar sesión y obtener tokens
+      summary: Login and get tokens
       requestBody:
         required: true
         content:
@@ -69,7 +69,7 @@ paths:
                   type: string
       responses:
         200:
-          description: Login exitoso con tokens
+          description: Successful login with tokens
           content:
             application/json:
               schema:
@@ -86,7 +86,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: Renovar access token usando refresh token
+      summary: Refresh access token using refresh token
       requestBody:
         required: true
         content:
@@ -98,7 +98,7 @@ paths:
                   type: string
       responses:
         200:
-          description: Token renovado correctamente
+          description: Token refreshed successfully
           content:
             application/json:
               schema:
@@ -115,12 +115,12 @@ paths:
     post:
       tags:
         - Auth
-      summary: Cerrar sesión
+      summary: Logout
       security:
         - bearerAuth: []
       responses:
         200:
-          description: Logout exitoso
+          description: Successful logout
           content:
             application/json:
               schema:
@@ -135,16 +135,16 @@ paths:
     get:
       tags:
         - Auth
-      summary: Obtener perfil del usuario autenticado
+      summary: Get authenticated user profile
       security:
         - bearerAuth: []
       responses:
         200:
-          description: Perfil obtenido correctamente
+          description: Profile obtained successfully
     put:
       tags:
         - Auth
-      summary: Actualizar nombre y email del usuario autenticado
+      summary: Update name and email of authenticated user
       security:
         - bearerAuth: []
       requestBody:
@@ -160,13 +160,13 @@ paths:
                   type: string
       responses:
         200:
-          description: Perfil actualizado correctamente
+          description: Profile updated successfully
 
   /auth/password:
     put:
       tags:
         - Auth
-      summary: Cambiar contraseña del usuario autenticado
+      summary: Change password of authenticated user
       security:
         - bearerAuth: []
       requestBody:
@@ -182,18 +182,18 @@ paths:
                   type: string
       responses:
         200:
-          description: Contraseña actualizada correctamente
+          description: Password updated successfully
 
   /users:
     get:
       tags:
         - Users
-      summary: Lista de usuarios (solo ADMIN)
+      summary: List of users (ADMIN only)
       security:
         - bearerAuth: []
       responses:
         200:
-          description: Lista de usuarios obtenida correctamente
+          description: User list obtained successfully
           content:
             application/json:
               schema:
@@ -233,7 +233,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Obtener usuario por ID
+      summary: Get user by ID
       security:
         - bearerAuth: []
       parameters:
@@ -244,15 +244,15 @@ paths:
             type: integer
       responses:
         200:
-          description: Usuario encontrado
+          description: User found
         404:
-          description: Usuario no encontrado
+          description: User not found
 
   /users/username/{username}:
     get:
       tags:
         - Users
-      summary: Obtener usuario por username (solo ADMIN)
+      summary: Get user by username (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -263,15 +263,15 @@ paths:
             type: string
       responses:
         200:
-          description: Usuario encontrado
+          description: User found
         404:
-          description: Usuario no encontrado
+          description: User not found
 
   /users/email/{email}:
     get:
       tags:
         - Users
-      summary: Obtener usuario por email (solo ADMIN)
+      summary: Get user by email (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -282,15 +282,15 @@ paths:
             type: string
       responses:
         200:
-          description: Usuario encontrado
+          description: User found
         404:
-          description: Usuario no encontrado
+          description: User not found
 
   /users/{id}/activate:
     put:
       tags:
         - Users
-      summary: Activar usuario (solo ADMIN)
+      summary: Activate user (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -301,13 +301,13 @@ paths:
             type: integer
       responses:
         200:
-          description: Usuario activado correctamente
+          description: User activated successfully
 
   /users/{id}/deactivate:
     put:
       tags:
         - Users
-      summary: Desactivar usuario (solo ADMIN)
+      summary: Deactivate user (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -318,13 +318,13 @@ paths:
             type: integer
       responses:
         200:
-          description: Usuario desactivado correctamente
+          description: User deactivated successfully
 
   /users/{id}/suspend:
     put:
       tags:
         - Users
-      summary: Suspender usuario (solo ADMIN)
+      summary: Suspend user (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -335,13 +335,13 @@ paths:
             type: integer
       responses:
         200:
-          description: Usuario suspendido correctamente
+          description: User suspended successfully
 
   /users/{id}/block:
     put:
       tags:
         - Users
-      summary: Bloquear usuario (solo ADMIN)
+      summary: Block user (ADMIN only)
       security:
         - bearerAuth: []
       parameters:
@@ -352,7 +352,7 @@ paths:
             type: integer
       responses:
         200:
-          description: Usuario bloqueado correctamente
+          description: User blocked successfully
 
 components:
   securitySchemes:
